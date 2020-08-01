@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "221043859002",
+    "firebase_url": "https://tracking-51514.firebaseio.com",
+    "project_id": "tracking-51514",
+    "storage_bucket": "tracking-51514.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221043859002:android:130f4eb3f159419232df03",
+        "android_client_info": {
+          "package_name": "com.companyname.amazonpt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221043859002-hr6sv1imp6l0s06qadnbtpce9ejrp8h3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHJy87BvEONFZYjD6XRBp1BE6goNHgpY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221043859002-hr6sv1imp6l0s06qadnbtpce9ejrp8h3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
