@@ -25,6 +25,8 @@ namespace amazonpt
             {
                 OneSignal.Current.IdsAvailable(IdsAvaliable);
             }
+
+           
         }
 
         private void IdsAvaliable(string playerId, string pushToken)

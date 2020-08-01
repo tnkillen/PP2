@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="amazonpt.AddItemPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry x:Name="itemName" Placeholder="Item Name"/>
+            <Entry x:Name="price" Placeholder="Desired Price" Keyboard="Numeric" />
+            <Entry x:Name="url" Placeholder="Amazon Url" />
+            <Button x:Name="confirm" Text="Submit" Clicked="confirm_Clicked"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,4 +1,6 @@
 ﻿using amazonpt.Helpers;
+using amazonpt.Views;
+using amazonpt.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,20 +16,35 @@ namespace amazonpt
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        item selectedItem;
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = new ItemView();
         }
 
-        private async void confirm_Clicked(object sender, EventArgs e)
+        protected override async void OnAppearing()
         {
-            if (itemName.Text != string.Empty && price.Text != string.Empty && url.Text != string.Empty)
-            {
-                await FirebaseHelper.AddItem(itemName.Text, Convert.ToDouble(price.Text), url.Text);
-                itemName.Text = string.Empty;
-                price.Text = string.Empty;
-                url.Text = string.Empty;
-            }
+            base.OnAppearing();
+            await (BindingContext as ItemView).RefreshItems();
+            selectedItem = null;
+        }
+
+        private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selectedItem = (e.CurrentSelection.FirstOrDefault() as item);
+        }
+
+
+        private async void GoToAddItem()
+        { 
+            var newItemPage = new AddItemPage();
+            await Navigation.PushModalAsync(newItemPage);
+        }
+
+        private void AddButton_Clicked(object sender, EventArgs e)
+        {
+            GoToAddItem();
         }
     }
 }

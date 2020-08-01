@@ -3,15 +3,75 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:magic="clr-namespace:MagicGradients;assembly=MagicGradients" 
              mc:Ignorable="d"
              x:Class="amazonpt.MainPage">
+    
+    <ContentPage.Resources>
+        <Style TargetType="Frame">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor"
+                                        Value="Black" />
+                                <Setter Property="BackgroundColor"
+                                        Value="Purple"/>
+                                <Setter Property="CornerRadius"
+                                        Value="0"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
-    <StackLayout>
-        <Entry x:Name="itemName" Placeholder="Item Name"/>
-        <Entry x:Name="price" Placeholder="Desired Price" Keyboard="Numeric" />
-        <Entry x:Name="url" Placeholder="Amazon Url" />
-        <Button x:Name="confirm" Text="Submit" Clicked="confirm_Clicked"/>
 
-    </StackLayout>
+    <Grid ColumnSpacing="0" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <magic:GradientView Grid.Row="0" Grid.RowSpan ="4" Grid.ColumnSpan="3">
+            <magic:GradientView.GradientSource>
+                <magic:CssGradientSource>
+                    <!-- Css Gradient Code-->
+                    <x:String>
+                        <![CDATA[
+                  radial-gradient(circle at 25% 54%, rgba(18, 18, 18,0.06) 0%, rgba(18, 18, 18,0.06) 22%,transparent 22%, transparent 100%),radial-gradient(circle at 67% 98%, rgba(223, 223, 223,0.06) 0%, rgba(223, 223, 223,0.06) 52%,transparent 52%, transparent 100%),radial-gradient(circle at 7% 92%, rgba(169, 169, 169,0.06) 0%, rgba(169, 169, 169,0.06) 52%,transparent 52%, transparent 100%),radial-gradient(circle at 46% 37%, rgba(187, 187, 187,0.06) 0%, rgba(187, 187, 187,0.06) 47%,transparent 47%, transparent 100%),radial-gradient(circle at 38% 35%, rgba(57, 57, 57,0.06) 0%, rgba(57, 57, 57,0.06) 99%,transparent 99%, transparent 100%),radial-gradient(circle at 46% 86%, rgba(100, 100, 100,0.06) 0%, rgba(100, 100, 100,0.06) 60%,transparent 60%, transparent 100%),linear-gradient(416deg, rgb(57, 8, 200),rgb(240, 145, 202))]]>
+                    </x:String>
+                </magic:CssGradientSource>
+            </magic:GradientView.GradientSource>
+        </magic:GradientView>
+        <CollectionView x:Name="ItemDisplay" ItemsSource="{Binding WatchList}" Margin="15" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3" SelectionMode="Single" SelectionChanged="CollectionView_SelectionChanged" >
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                           ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+                    <Frame CornerRadius="5" HasShadow="True" Margin ="5" BorderColor="Black" Padding="5" BackgroundColor="FloralWhite">
+                        <Grid  RowSpacing="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label x:Name="itemName" Text="{Binding ItemName}" Grid.Row="0" HorizontalTextAlignment="Start" TextColor="Black" VerticalTextAlignment="Center"  FontSize="Medium" FontAttributes="Bold"/>
+                            <Label x:Name="price" Grid.Row="1" Text="{Binding DesiredPrice, StringFormat='${0}'}" TextColor="Black" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button x:Name="AddButton" Text="+" Grid.Row="3" Grid.Column="1" CornerRadius="25" VerticalOptions="End" HorizontalOptions="Center" BackgroundColor="Aqua" WidthRequest="50" HeightRequest="50" Margin="10" Clicked="AddButton_Clicked"/>
+
+    </Grid>
 
 </ContentPage>

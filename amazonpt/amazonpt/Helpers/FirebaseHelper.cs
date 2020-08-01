@@ -7,10 +7,11 @@ using Firebase.Database.Query;
 using System.Diagnostics;
 using Xamarin.Forms;
 using amazonpt.Models;
+using System.Linq;
 
 namespace amazonpt.Helpers
 {
-    public class FirebaseHelper
+    public class FirebaseHelper : ContentPage
     {
         // Connects to the Firebase DataBase
         public static FirebaseClient firebase = new FirebaseClient("https://tracking-51514.firebaseio.com");
@@ -31,6 +32,28 @@ namespace amazonpt.Helpers
             {
                 Debug.WriteLine($"Error:{e}");
                 return false;
+            }
+        }
+
+        public static async Task<List<item>> GetWatchItems()
+        {
+            try
+            {
+                var itemList = (await firebase
+                .Child(Application.Current.Properties["PlayerId"].ToString())
+                .OnceAsync<item>()).Select(item =>
+                new item
+                {
+                    ItemName = item.Object.ItemName,
+                    DesiredPrice = item.Object.DesiredPrice,
+                    ItemURL = item.Object.ItemURL
+                }).ToList();
+                return itemList;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Error:{e}");
+                return null;
             }
         }
 
