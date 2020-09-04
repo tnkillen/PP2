@@ -17,5 +17,8 @@ namespace amazonpt.Models
         [JsonProperty("itemURL")]
         public string ItemURL { get; set; }
 
+        [JsonProperty("priceAchived")]
+        public bool PriceAchived { get; set; }
+
     }
 }

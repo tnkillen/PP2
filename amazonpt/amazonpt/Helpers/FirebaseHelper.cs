@@ -25,7 +25,7 @@ namespace amazonpt.Helpers
             {
                 await firebase
                     .Child(Application.Current.Properties["PlayerId"].ToString())
-                    .PostAsync(new item() { ItemName = itemName, DesiredPrice = desiredPrice, ItemURL = itemURL });
+                    .PostAsync(new item() { ItemName = itemName, DesiredPrice = desiredPrice, ItemURL = itemURL, PriceAchived = false });
                 return true;
             }
             catch (Exception e)

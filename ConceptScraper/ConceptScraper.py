@@ -19,14 +19,16 @@ headers = {
     "User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'}
 # Class setup
 class Listing:
-    def __init__(self, userid, url, desiredPrice, itemName):
+    def __init__(self, listingKey, userid, url, desiredPrice, itemName, priceAchived):
+        self.listingKey = listingKey
         self.userid = userid
         self.url = url
         self.desiredPrice = desiredPrice
         self.itemName = itemName
         self.tryCount = 0
+        self.priceAchived = priceAchived
 
-def check_price(userid, url, desiredPrice, itemName):
+def check_price(listingKey, userid, url, desiredPrice, itemName, priceAchived):
     try:
         try:
             page = requests.get(url, headers=headers)
@@ -51,7 +53,7 @@ def check_price(userid, url, desiredPrice, itemName):
                     try:
                         price = soup.find(id="price").get_text()
                     except AttributeError:
-                        return Listing(userid, url, desiredPrice, itemName)
+                        return Listing(listingKey, userid, url, desiredPrice, itemName, priceAchived)
     except (ChunkedEncodingError, ConnectionError, ConnectTimeout) as e:
         print("ERROR: " + str(e))
         return 1
@@ -61,13 +63,18 @@ def check_price(userid, url, desiredPrice, itemName):
 
     converted_price = float(price)
     
-    if(converted_price <= desiredPrice):
+    if converted_price <= desiredPrice and priceAchived == False:
         send_mail(userid, itemName + " Has Dropped in Price on Amazon!")
+        listingRef = db.reference(userid).child(listingKey)
+        listingRef.update({'priceAchived' : True})
+    
+    if converted_price > desiredPrice and priceAchived == True:
+        send_mail(userid, itemName + " Has Increased in Price on Amazon!")
+        listingRef = db.reference(userid).child(listingKey)
+        listingRef.update({'priceAchived' : False})
+   
 
-    #print(title.strip())
-    print(converted_price)
     return 0
-
 
 def send_mail(userid, message):
     data = {"app_id": "02fed716-2742-4d0e-b796-4d9b86c3dafb",
@@ -80,14 +87,15 @@ def run_listings():
    firebaseFetch = root.get()
    for userid,itemInfo in firebaseFetch.items():
       for key in itemInfo:
-          hasReturned = check_price(userid, itemInfo[key]['itemURL'], itemInfo[key]['desiredPrice'], itemInfo[key]['itemName'])
+          hasReturned = check_price(key, userid, itemInfo[key]['itemURL'], itemInfo[key]['desiredPrice'], itemInfo[key]['itemName'], itemInfo[key]['priceAchived'])
           if type(hasReturned) is Listing:
               failedListings.append(hasReturned)
+         
               
 
    while(len(failedListings) > 0):
        for x in failedListings:
-           hasReturned = check_price(x.userid, x.url, x.desiredPrice, x.itemName)
+           hasReturned = check_price(x.listingKey, x.userid, x.url, x.desiredPrice, x.itemName, x.priceAchived)
            if hasReturned == 0:
                failedListings.remove(x)
            elif x.tryCount >= 3:
@@ -101,6 +109,7 @@ def run_listings():
 while(True):
     print("\nChecking Prices for all Users: \n")
     run_listings()
+    print("\nPrice Check Completed \n")
     time.sleep(60 * 60)  # runs check every hour
 
 
