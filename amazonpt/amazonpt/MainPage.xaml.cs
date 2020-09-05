@@ -20,6 +20,7 @@ namespace amazonpt
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             BindingContext = new ItemView();
         }
 

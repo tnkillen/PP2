@@ -17,7 +17,11 @@ namespace amazonpt
         {
             InitializeComponent();
         }
-
+        public AddItemPage(string link)
+        {
+            InitializeComponent();
+            url.Text = link;
+        }
         private async void confirm_Clicked(object sender, EventArgs e)
         {
             if (itemName.Text != string.Empty && price.Text != string.Empty && url.Text != string.Empty)

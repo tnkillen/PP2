@@ -9,11 +9,12 @@ namespace amazonpt
 {
     public partial class App : Application
     {
+        NavigationPage navigationRoot;
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPage();
+            navigationRoot = new NavigationPage(new MainPage());
+            MainPage = navigationRoot;
             OneSignal.Current.StartInit("02fed716-2742-4d0e-b796-4d9b86c3dafb")
            .Settings(new Dictionary<string, bool>() {
                 { IOSSettings.kOSSettingsKeyAutoPrompt, false },
@@ -45,6 +46,11 @@ namespace amazonpt
 
         protected override void OnResume()
         {
+        }
+        public async void GoToAddItem(string link)
+        {
+            var newItemPage = new AddItemPage(link);
+            await navigationRoot.Navigation.PushModalAsync(newItemPage);
         }
     }
 }

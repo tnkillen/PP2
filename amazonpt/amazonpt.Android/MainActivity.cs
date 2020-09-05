@@ -10,6 +10,7 @@ using Android.OS;
 using Com.OneSignal;
 using System.Collections.Generic;
 using Com.OneSignal.Abstractions;
+using System.Text.RegularExpressions;
 
 namespace amazonpt.Droid
 {
@@ -19,6 +20,7 @@ namespace amazonpt.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            App _mainForms;
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -32,8 +34,21 @@ namespace amazonpt.Droid
                     { IOSSettings.kOSSettingsKeyInAppLaunchURL, false } })
              .InFocusDisplaying(OSInFocusDisplayOption.Notification)
            .EndInit();
-            LoadApplication(new App());
 
+            _mainForms = new App();
+            LoadApplication(_mainForms);
+
+            if (Intent.Action == Intent.ActionSend)
+            {
+                string txt = Intent.GetStringExtra(Intent.ExtraText);
+                string link = string.Empty;
+                foreach (Match item in Regex.Matches(txt, @"(http|ftp|https):\/\/([\w\-_]+(?:(?:\.[\w\-_]+)+))([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?"))
+                {
+                    link = item.Value.ToString();
+                }
+
+                _mainForms.GoToAddItem(link);
+            }
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
