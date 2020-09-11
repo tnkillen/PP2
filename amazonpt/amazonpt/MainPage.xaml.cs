@@ -46,6 +46,10 @@ namespace amazonpt
             {
                 await Launcher.OpenAsync("com.amazon.mobile.shopping://www.amazon.com/products/" + productID);
             }
+            else
+            {
+               await Launcher.OpenAsync(new Uri(selectedItem.ItemURL));
+            }
         }
 
 
