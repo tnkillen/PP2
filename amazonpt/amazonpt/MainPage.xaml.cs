@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Essentials;
+using System.Text.RegularExpressions;
 
 namespace amazonpt
 {
@@ -31,9 +33,19 @@ namespace amazonpt
             selectedItem = null;
         }
 
-        private void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void CollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedItem = (e.CurrentSelection.FirstOrDefault() as item);
+
+            string productID = string.Empty;
+            foreach (Match item in Regex.Matches(selectedItem.ItemURL, @"(/([a-zA-Z0-9]{10})(?:[/?]|$))"))
+            {
+                productID = item.Value.ToString();
+            }
+            if (await Launcher.CanOpenAsync("com.amazon.mobile.shopping://www.amazon.com/products/" + productID))
+            {
+                await Launcher.OpenAsync("com.amazon.mobile.shopping://www.amazon.com/products/" + productID);
+            }
         }
 
 
