@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Xamarin.Forms;
 using amazonpt.Models;
 using System.Linq;
+using System.Globalization;
 
 namespace amazonpt.Helpers
 {
@@ -20,7 +21,7 @@ namespace amazonpt.Helpers
         // add new item to firebase
         public static async Task<bool> AddItem(string itemName, double desiredPrice, string itemURL)
         {
-
+            
             try
             {
                 await firebase
