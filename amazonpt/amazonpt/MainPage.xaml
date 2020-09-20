@@ -26,28 +26,30 @@
                 </magic:CssGradientSource>
             </magic:GradientView.GradientSource>
         </magic:GradientView>
-        <CollectionView x:Name="ItemDisplay" ItemsSource="{Binding WatchList}" Margin="15" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3" SelectionMode="Single" SelectionChanged="CollectionView_SelectionChanged" >
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical"
+        <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshCommand}" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <CollectionView x:Name="ItemDisplay" ItemsSource="{Binding WatchList}" Margin="15" SelectionMode="Single" SelectionChanged="CollectionView_SelectionChanged" >
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
                            ItemSpacing="10" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
 
-                <DataTemplate>
-                    <Frame CornerRadius="5" HasShadow="True" Margin ="5" BorderColor="Black" Padding="5" BackgroundColor="{Binding BackgroundColor}">
-                        <Grid  RowSpacing="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <DataTemplate>
+                        <Frame CornerRadius="5" HasShadow="True" Margin ="5" BorderColor="Black" Padding="5" BackgroundColor="{Binding BackgroundColor}">
+                            <Grid  RowSpacing="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-                            <Label x:Name="itemName" Text="{Binding ItemName}" Grid.Row="0" HorizontalTextAlignment="Start" TextColor="Black" VerticalTextAlignment="Center"  FontSize="Medium" FontAttributes="Bold"/>
-                            <Label x:Name="price" Grid.Row="1" Text="{Binding DesiredPrice, StringFormat='${0}'}" TextColor="Black" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                <Label x:Name="itemName" Text="{Binding ItemName}" Grid.Row="0" HorizontalTextAlignment="Start" TextColor="Black" VerticalTextAlignment="Center"  FontSize="Medium" FontAttributes="Bold"/>
+                                <Label x:Name="price" Grid.Row="1" Text="{Binding DesiredPrice, StringFormat='${0}'}" TextColor="Black" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
         <Button x:Name="AddButton" Text="+" Grid.Row="3" Grid.Column="1" CornerRadius="25" VerticalOptions="End" HorizontalOptions="Center" BackgroundColor="Aqua" WidthRequest="50" HeightRequest="50" Margin="10" Clicked="AddButton_Clicked"/>
 
     </Grid>
