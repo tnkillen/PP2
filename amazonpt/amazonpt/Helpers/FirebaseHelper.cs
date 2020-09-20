@@ -66,5 +66,29 @@ namespace amazonpt.Helpers
             }
         }
 
+        public static async Task<bool> DeleteItem(item toDelete)
+        {
+            try
+            {
+                var SingleItemObject =
+               (await firebase
+                 .Child(Application.Current.Properties["PlayerId"].ToString())
+                 .OnceAsync<item>()).Where(a => a.Object.ItemName == toDelete.ItemName)
+                 .Where(a => a.Object.ItemURL == toDelete.ItemURL).FirstOrDefault(); ;
+
+                await firebase
+               .Child(Application.Current.Properties["PlayerId"].ToString())
+               .Child(SingleItemObject.Key)
+               .DeleteAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Error:{e}");
+                return false;
+            }
+        }
+
     }
 }

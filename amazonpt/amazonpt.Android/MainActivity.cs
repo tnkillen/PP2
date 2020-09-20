@@ -11,6 +11,7 @@ using Com.OneSignal;
 using System.Collections.Generic;
 using Com.OneSignal.Abstractions;
 using System.Text.RegularExpressions;
+using Xamarin.Forms;
 
 namespace amazonpt.Droid
 {
@@ -25,7 +26,7 @@ namespace amazonpt.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-
+            Forms.SetFlags("SwipeView_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             OneSignal.Current.StartInit("02fed716-2742-4d0e-b796-4d9b86c3dafb")
@@ -34,7 +35,6 @@ namespace amazonpt.Droid
                     { IOSSettings.kOSSettingsKeyInAppLaunchURL, false } })
              .InFocusDisplaying(OSInFocusDisplayOption.Notification)
            .EndInit();
-
             _mainForms = new App();
             LoadApplication(_mainForms);
 

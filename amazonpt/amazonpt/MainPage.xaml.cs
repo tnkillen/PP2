@@ -64,5 +64,12 @@ namespace amazonpt
         {
             GoToAddItem();
         }
+
+        private async void SwipeItem_Invoked(object sender, EventArgs e)
+        {
+           item toDelete = ((SwipeItem)sender).BindingContext as item;
+           await FirebaseHelper.DeleteItem(toDelete);
+           await (BindingContext as ItemView).RefreshItems();
+        }
     }
 }

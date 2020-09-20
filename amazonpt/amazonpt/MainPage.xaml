@@ -33,19 +33,25 @@
                            ItemSpacing="10" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
-
                     <DataTemplate>
-                        <Frame CornerRadius="5" HasShadow="True" Margin ="5" BorderColor="Black" Padding="5" BackgroundColor="{Binding BackgroundColor}">
-                            <Grid  RowSpacing="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItem IconImageSource="trashcan.png"
+                                           BackgroundColor="LightBlue"
+                                           Invoked="SwipeItem_Invoked"/>
+                            </SwipeView.RightItems>
+                            <Frame CornerRadius="5" HasShadow="True" Margin ="5" BorderColor="Black" Padding="5" BackgroundColor="{Binding BackgroundColor}">
+                                <Grid  RowSpacing="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                                <Label x:Name="itemName" Text="{Binding ItemName}" Grid.Row="0" HorizontalTextAlignment="Start" TextColor="Black" VerticalTextAlignment="Center"  FontSize="Medium" FontAttributes="Bold"/>
-                                <Label x:Name="price" Grid.Row="1" Text="{Binding DesiredPrice, StringFormat='${0}'}" TextColor="Black" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
-                            </Grid>
-                        </Frame>
+                                    <Label x:Name="itemName" Text="{Binding ItemName}" Grid.Row="0" HorizontalTextAlignment="Start" TextColor="Black" VerticalTextAlignment="Center"  FontSize="Medium" FontAttributes="Bold"/>
+                                    <Label x:Name="price" Grid.Row="1" Text="{Binding DesiredPrice, StringFormat='${0}'}" TextColor="Black" HorizontalTextAlignment="End" VerticalTextAlignment="Center"/>
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
