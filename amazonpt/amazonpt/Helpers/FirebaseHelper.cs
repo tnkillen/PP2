@@ -25,7 +25,7 @@ namespace amazonpt.Helpers
             {
                 await firebase
                     .Child(Application.Current.Properties["PlayerId"].ToString())
-                    .PostAsync(new item() { ItemName = itemName, DesiredPrice = desiredPrice, ItemURL = itemURL, PriceAchived = false });
+                    .PostAsync(new item() { ItemName = itemName, DesiredPrice = desiredPrice, ItemURL = itemURL, PriceAchived = false, BackgroundColor = "FloralWhite" });
                 return true;
             }
             catch (Exception e)
@@ -46,8 +46,16 @@ namespace amazonpt.Helpers
                 {
                     ItemName = item.Object.ItemName,
                     DesiredPrice = item.Object.DesiredPrice,
-                    ItemURL = item.Object.ItemURL
+                    ItemURL = item.Object.ItemURL,
+                    PriceAchived = item.Object.PriceAchived,
+                    BackgroundColor = "FloralWhite"
+                    
                 }).ToList();
+                foreach (item listing in itemList)
+                {
+                    if (listing.PriceAchived == true)
+                        listing.BackgroundColor = "LightGreen";
+                }
                 return itemList;
             }
             catch (Exception e)

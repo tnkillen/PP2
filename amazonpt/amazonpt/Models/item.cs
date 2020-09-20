@@ -20,5 +20,9 @@ namespace amazonpt.Models
         [JsonProperty("priceAchived")]
         public bool PriceAchived { get; set; }
 
+        [JsonProperty("backgroundColor")]
+        public string BackgroundColor { get; set; }
+
+
     }
 }

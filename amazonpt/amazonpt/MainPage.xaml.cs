@@ -50,6 +50,7 @@ namespace amazonpt
             {
                await Launcher.OpenAsync(new Uri(selectedItem.ItemURL));
             }
+            selectedItem = null;
         }
 
 
